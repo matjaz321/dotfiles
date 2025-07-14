@@ -1,26 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-get_focused_window() {
-    # Get the actually focused window ID
-    active_window_id=$(xprop -root _NET_ACTIVE_WINDOW 2>/dev/null | cut -d' ' -f5)
-    
-    if [ "$active_window_id" != "0x0" ] && [ -n "$active_window_id" ]; then
-        # Get the title of the focused window
-        title=$(xprop -id "$active_window_id" WM_NAME 2>/dev/null | cut -d'"' -f2)
-        
-        # Filter out polybar windows
-        if [[ "$title" == *"polybar"* ]]; then
-            echo "Desktop"
-        else
-            echo "${title:-Desktop}"
-        fi
-    else
-        echo "Desktop"
-    fi
-}
+# Get active window ID
+wid=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print $5}')
+[ -z "$wid" ] && echo "N/A" && exit
 
-# Run in tail mode for real-time updates
-while true; do
-    get_focused_window
-    sleep 0.1
-done
+# Normalize to 0xXXXXXXXX format
+wid=$(printf "0x%08x\n" $((wid)))
+
+# Get PID of the window
+pid=$(xprop -id "$wid" _NET_WM_PID | awk '{print $3}')
+[ -z "$pid" ] && echo "N/A" && exit
+
+# Get the application name
+app=$(ps -p "$pid" -o comm=)
+[ -z "$app" ] && echo "N/A" && exit
+
+# Capitalize first letter
+app_capitalized=$(echo "$app" | sed -E 's/(.)(.*)/\U\1\E\2/')
+
+echo "$app_capitalized"
+
