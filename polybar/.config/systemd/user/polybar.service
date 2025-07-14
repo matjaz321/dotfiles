@@ -1,0 +1,10 @@
+[Unit]
+Description=Polybar
+After=graphical-session.target
+
+[Service]
+Type=exec
+ExecStart=/home/matjaz/.config/polybar/launch.sh
+
+[Install]
+WantedBy=default.target
