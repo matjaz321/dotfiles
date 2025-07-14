@@ -1,10 +1,18 @@
 [Unit]
 Description=Polybar
 After=graphical-session.target
+PartOf=graphical-session.target
 
 [Service]
-Type=exec
-ExecStart=/home/matjaz/.config/polybar/launch.sh
+Type=simple
+ExecStart=/usr/bin/polybar
+Restart=on-failure
+#RestartSec=5
+Environment=DISPLAY=:0
+#Environment=XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.107S92
+#Environment=DISPLAY=:0
+#Environment=XAUTHORITY=%t/Xauthority
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target
+
