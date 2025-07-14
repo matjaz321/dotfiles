@@ -43,11 +43,17 @@
 # resize-overlay-duration = 4s 200ms
 #
 
+font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 19.5
-theme = "catppuccin-mocha"
+theme = dark:catppuccin-mocha,light:catppuccin-latte
 
 window-height = 93
 window-width= 164
 
 app-notifications = no-clipboard-copy
 gtk-titlebar-hide-when-maximized = true
+
+### mac config
+macos-titlebar-style = hidden
+
+window-decoration = none
