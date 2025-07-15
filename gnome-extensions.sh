@@ -8,7 +8,9 @@ sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emula
 
 # install the hite-top-bar extension
 sudo apt install gnome-shell-extension-autohidetopbar
-#sudo apt install gnome-shell-extension-hide-top-bar
+
+# Disable dock
+gnome-extensions disable ubuntu-dock@ubuntu.com
 
 # Set ghostty as default term
 gsettings set org.gnome.desktop.default-applications.terminal exec 'ghostty'
