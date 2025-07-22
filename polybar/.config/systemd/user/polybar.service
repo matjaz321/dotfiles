@@ -5,7 +5,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/polybar
+ExecStart=/usr/bin/polybar 
 Restart=on-failure
 #RestartSec=5
 Environment=DISPLAY=:0
