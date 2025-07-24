@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Polybar
+Comment=Launch polybar status bar
+Exec=/home/matjaz/.config/autostart/launch.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
