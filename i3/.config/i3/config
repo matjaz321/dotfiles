@@ -5,7 +5,7 @@ default_border none
 # Disable screensaver
 exec --no-startup-id xset s 0 0
 
-exec --no-startup-id xset dpms 300 300 600 
+exec --no-startup-id xset dpms 300 600 600 
 
 exec --no-startup-id xss-lock --transfer-sleep-lock -- /home/matjaz/dotfiles/lock_with_sleep.sh &
 
