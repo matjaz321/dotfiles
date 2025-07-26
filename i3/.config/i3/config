@@ -2,9 +2,17 @@ set $mod Mod4
 
 default_border none
 
+# Disable screensaver
+exec --no-startup-id xset s 0 0
+
+exec --no-startup-id xset dpms 300 300 600 
+
+exec --no-startup-id xss-lock --transfer-sleep-lock -- /home/matjaz/dotfiles/lock_with_sleep.sh &
+
 exec --no-startup-id feh --bg-scale ~/dotfiles/wallpapers/a_group_of_pink_flowers.png
 
-bindsym $mod+x exec i3lock --blur=5 --inside-color=00000000 --ring-color=808080ff --clock --image=dotfiles/wallpapers/a_group_of_pink_flowers_blurred.jpg --keyhl-color=ff808080 --bshl-color=ff6666ff --time-color=ffffffff --date-color=ffffffff --insidever-color=ff999980 --ringver-color=ff9999ff --verif-color=ffffffff --noinput-text="No Input" --modif-color=ff999980 --screen=0 && echo mem > /sys/power/state
+bindsym $mod+x exec ~/dotfiles/lock_with_sleep.sh
+
 #bindsym $mod+p exec --no-startup-id notify-send "Key pressed"
 
 # include keybindings.conf
