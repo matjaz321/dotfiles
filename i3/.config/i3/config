@@ -2,6 +2,13 @@ set $mod Mod4
 
 default_border none
 
+exec --no-startup-id feh --bg-scale ~/dotfiles/wallpapers/a_group_of_pink_flowers.png
+
+bindsym $mod+x exec i3lock --blur=5 --inside-color=00000000 --ring-color=808080ff --clock --image=dotfiles/wallpapers/a_group_of_pink_flowers_blurred.jpg --keyhl-color=ff808080 --bshl-color=ff6666ff --time-color=ffffffff --date-color=ffffffff --insidever-color=ff999980 --ringver-color=ff9999ff --verif-color=ffffffff --noinput-text="No Input" --modif-color=ff999980 --screen=0 && echo mem > /sys/power/state
+#bindsym $mod+p exec --no-startup-id notify-send "Key pressed"
+
+# include keybindings.conf
+
 exec --no-startup-id xrandr --output DisplayPort-5 --scale 1.5x1.5 --rotate right --pos 3840x0
 
 # Font for window titles. Will also be used by the bar unless a different font

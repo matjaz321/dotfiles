@@ -9,6 +9,7 @@ APT_PACKAGES=(
 	"rofi"
 	"ripgrep"
 	"fd-find"
+	"pavucontrol"
 )
 
 for package in "${APT_PACKAGES[@]}"; do
