@@ -10,6 +10,7 @@ APT_PACKAGES=(
 	"ripgrep"
 	"fd-find"
 	"pavucontrol"
+	"gammastep"
 )
 
 for package in "${APT_PACKAGES[@]}"; do
