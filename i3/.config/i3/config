@@ -13,11 +13,22 @@ exec --no-startup-id feh --bg-scale ~/dotfiles/wallpapers/a_group_of_pink_flower
 
 bindsym $mod+x exec ~/dotfiles/lock_with_sleep.sh
 
+bindsym $mod+shift+p exec ~/dotfiles/dmenu_websearch
+
+# enable night shift
+exec --no-startup-id gammastep -m randr -v
+
 #bindsym $mod+p exec --no-startup-id notify-send "Key pressed"
 
 # include keybindings.conf
 
+# scale the right monitor to appropriate size and rotate it
+# the reason for running this on DP-4 and DP-5 is that it the monitor gets detected on a differnt DP each time it boots
+exec --no-startup-id xrandr --output DisplayPort-4 --scale 1.5x1.5 --rotate right --pos 3840x0
 exec --no-startup-id xrandr --output DisplayPort-5 --scale 1.5x1.5 --rotate right --pos 3840x0
+
+# scale the min monitor to 0.95
+exec --no-startup-id xrandr --output DisplayPort-3 --mode 3840x2160 --rate 60.00 --scale 0.95x0.95
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
