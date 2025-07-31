@@ -12,6 +12,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- /home/matjaz/dotfiles/loc
 exec --no-startup-id feh --bg-scale ~/dotfiles/wallpapers/a_group_of_pink_flowers.png
 
 bindsym $mod+x exec ~/dotfiles/lock_with_sleep.sh
+bindsym $mod+shift+t exec dmenu-translate
 
 bindsym $mod+shift+p exec ~/dotfiles/dmenu_websearch
 
