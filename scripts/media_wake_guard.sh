@@ -4,7 +4,7 @@
 # Supports Firefox, Chrome/Chromium, VLC, and Spotify
 
 # Configuration
-CHECK_INTERVAL=5  # Check every 30 seconds
+CHECK_INTERVAL=10  # Check every 30 seconds
 LOG_FILE="/tmp/media-wake-guard.log"
 INHIBIT_FILE="/tmp/media-wake-guard.inhibit"
 
@@ -16,69 +16,36 @@ log() {
 
 # Function to check if media is playing in browsers (Firefox/Chrome)
 check_browser_media() {
-    # Check Firefox - look for uncorked (actively playing) audio streams
-    if pgrep -x firefox >/dev/null; then
-        local firefox_streams=$(pactl list sink-inputs | grep -A 20 "application.name.*Firefox")
-        if [[ -n "$firefox_streams" ]] && echo "$firefox_streams" | grep -q "Corked: no"; then
-            return 0
-        fi
-    fi
-    
-    # Check Chrome/Chromium - look for uncorked audio streams
-    for browser in chrome chromium google-chrome; do
-        if pgrep -x "$browser" >/dev/null; then
-            local browser_streams=$(pactl list sink-inputs | grep -A 20 "application.name.*Chrome\|application.name.*Chromium")
-            if [[ -n "$browser_streams" ]] && echo "$browser_streams" | grep -q "Corked: no"; then
-                return 0
-            fi
-        fi
-    done
-    
-    return 1
+    # Just check if browsers have any uncorked audio streams
+    pactl list sink-inputs 2>/dev/null | grep -B20 -A20 "Corked: no" | grep -q "application.name.*\(Firefox\|Chrome\|Chromium\)"
 }
 
 # Function to check if VLC is playing
 check_vlc_media() {
-    if ! pgrep -x vlc >/dev/null; then
-        return 1
-    fi
-    
-    # Check VLC's D-Bus interface for playing status
-    if command -v qdbus >/dev/null 2>&1; then
+    # Try D-Bus first (most reliable)
+    if pgrep -x vlc >/dev/null 2>&1 && command -v qdbus >/dev/null 2>&1; then
         local vlc_status=$(qdbus org.mpris.MediaPlayer2.vlc /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlaybackStatus 2>/dev/null)
         if [[ "$vlc_status" == "Playing" ]]; then
             return 0
         fi
     fi
     
-    # Fallback: check for VLC audio streams
-    if pactl list sink-inputs | grep -q "application.name.*VLC"; then
-        return 0
-    fi
-       
-    return 1
+    # Fallback: check audio streams
+    pactl list sink-inputs 2>/dev/null | grep -B20 -A20 "Corked: no" | grep -q "application.name.*VLC"
 }
 
 # Function to check if Spotify is playing
 check_spotify_media() {
-    if ! pgrep -x spotify >/dev/null; then
-        return 1
-    fi
-    
-    # Check Spotify's D-Bus interface
-    if command -v dbus-send >/dev/null 2>&1; then
+    # Try D-Bus first (most reliable)
+    if pgrep -x spotify >/dev/null 2>&1 && command -v dbus-send >/dev/null 2>&1; then
         local spotify_status=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:PlaybackStatus 2>/dev/null | grep -o '"Playing"' | tr -d '"')
         if [[ "$spotify_status" == "Playing" ]]; then
             return 0
         fi
     fi
     
-    # Fallback: check for Spotify audio streams
-    if pactl list sink-inputs | grep -q "application.name.*Spotify"; then
-        return 0
-    fi
-    
-    return 1
+    # Fallback: check audio streams  
+    pactl list sink-inputs 2>/dev/null | grep -B20 -A20 "Corked: no" | grep -q "application.name.*Spotify"
 }
 
 # Function to check all media sources
@@ -180,19 +147,34 @@ if [[ -n "$missing_deps" ]]; then
 fi
 
 # Main loop
-log "Media Wake Guard started (PID: $$)"
+log "Media Wake Guard started (PID: $)"
 log "Monitoring Firefox, Chrome, VLC, and Spotify for media playback"
 
 while true; do
-    if active_sources=$(check_media_playing); then
+    # Add debug logging every few cycles to show script is alive
+    if (( $(date +%s) % 300 == 0 )); then  # Every 5 minutes
+        log "Script alive check - monitoring continues..."
+    fi
+    
+    # Wrap media check in error handling
+    if active_sources=$(check_media_playing 2>&1); then
         log "Media active in: $active_sources"
         inhibit_sleep
     else
+        # Check if there was an error in media detection
+        exit_code=$?
+        if [[ $exit_code -ne 0 ]] && [[ -n "$active_sources" ]]; then
+            log "Warning: Media check error: $active_sources"
+        fi
+        
         if [[ -f "$INHIBIT_FILE" ]]; then
             log "No media detected, removing inhibition"
         fi
         remove_inhibition
     fi
     
-    sleep "$CHECK_INTERVAL"
+    # Add error handling for sleep command
+    if ! sleep "$CHECK_INTERVAL"; then
+        log "Error: Sleep command interrupted, continuing..."
+    fi
 done
