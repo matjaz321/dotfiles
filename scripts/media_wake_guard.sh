@@ -4,7 +4,7 @@
 # Supports Firefox, Chrome/Chromium, VLC, and Spotify
 
 # Configuration
-CHECK_INTERVAL=10  # Check every 30 seconds
+CHECK_INTERVAL=30  # Check every 30 seconds
 LOG_FILE="/tmp/media-wake-guard.log"
 INHIBIT_FILE="/tmp/media-wake-guard.inhibit"
 
