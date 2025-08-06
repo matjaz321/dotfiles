@@ -8,7 +8,8 @@ NC='\033[0m' # No Color
 
 
 SERVICES=(
-	"gammastep"
+#	"gammastep"
+	"media-wake-guard"
 )
 
 service_exists() {

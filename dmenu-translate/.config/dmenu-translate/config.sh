@@ -1,3 +1,3 @@
-TRANS_LANGS='de en'
+TRANS_LANGS='de en si'
 DMENU='dmenu'
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Media Wake Guard
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/media_wake_guard.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
