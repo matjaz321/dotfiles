@@ -45,7 +45,7 @@
 
 font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 19.5
-theme = dark:catppuccin-mocha,light:catppuccin-mocha
+theme = dark:"Catppuccin Mocha",light:"Catppuccin Mocha"
 
 window-height = 93
 window-width= 164

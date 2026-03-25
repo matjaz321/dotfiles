@@ -27,6 +27,8 @@ exec --no-startup-id gammastep -m randr -v
 # the reason for running this on DP-4 and DP-5 is that it the monitor gets detected on a differnt DP each time it boots
 exec --no-startup-id xrandr --output DisplayPort-4 --scale 1.5x1.5 --rotate right --pos 3840x0
 exec --no-startup-id xrandr --output DisplayPort-5 --scale 1.5x1.5 --rotate right --pos 3840x0
+exec --no-startup-id xrandr --output DisplayPort-6 --scale 1.5x1.5 --rotate right --pos 3840x0
+
 
 # scale the min monitor to 0.95
 exec --no-startup-id xrandr --output DisplayPort-3 --mode 3840x2160 --rate 60.00 --scale 0.95x0.95
@@ -48,7 +50,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
