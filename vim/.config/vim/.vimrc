@@ -16,4 +16,5 @@ syntax on
 
 let mmapleader = " "
 
+" To open a file browser
 nnoremap <leader> cd : Ex<CR>

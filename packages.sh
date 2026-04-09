@@ -16,6 +16,7 @@ APT_PACKAGES=(
 	"aspell"
 	"translate-shell"
 	"xclip"
+    "fzf"
 )
 
 package_list=""

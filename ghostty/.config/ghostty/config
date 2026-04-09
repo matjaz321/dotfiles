@@ -57,3 +57,10 @@ gtk-titlebar-hide-when-maximized = true
 macos-titlebar-style = hidden
 
 window-decoration = none
+
+# Cursor styling
+cursor-style = "block"
+cursor-style-blink = false
+
+# Fix general slowness on hyprland (https://github.com/ghostty-org/ghostty/discussions/3224)
+async-backend = epoll
