@@ -1,5 +1,6 @@
 {
-	"height": 30,
+    "reload_style_on_change": true,
+	"height": 26,
 	"modules-left": [
 		"sway/workspaces",
 		"sway/mode",
@@ -13,7 +14,6 @@
 		"network",
 		"sway/language",
 		"clock",
-		"tray",
 		"custom/power"
 	],
 	"sway/language": {
@@ -24,7 +24,7 @@
 		"on-click": "pavucontrol",
 		"scroll-step": 5,
 		"format-muted": "",
-		"format": "{icon}     {volume}%",
+		"format": "{icon} {volume}%",
 		"format-icons": {
 		    "headphone": "",
 		    "hands-free": "",
@@ -32,24 +32,24 @@
 		    "phone": "",
 		    "portable": "",
 		    "default": ["", "", ""]
-		},
+		}
 	},
 	"network": {
 		"tooltip-format": "{ifname} {bandwidthDownBytes}",
 		"format-wifi": "({signalStrength}%) ",
 		"format-ethernet": "",
-		"format-disconnected": "Disconnected ⚠",
+		"format-disconnected": "Disconnected ⚠"
 	},
-	"custom/power": {
-		"format" : " ⏻ ",
-		"tooltip": false,
-		"menu": "on-click",
-		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
-		"menu-actions": {
-			"shutdown": "shutdown",
-			"reboot": "reboot",
-			"suspend": "systemctl suspend",
-			"hibernate": "systemctl hibernate"
-		}
+    "custom/power": {
+        "format" : "⏻ ",
+            "tooltip": false,
+            "menu": "on-click",
+            "menu-file": "/home/matjaz/.config/waybar/power_menu.xml",
+            "menu-actions": {
+                "shutdown": "shutdown",
+                "reboot": "reboot",
+                "suspend": "systemctl suspend",
+                "hibernate": "systemctl hibernate"
+            }
     }
 }
