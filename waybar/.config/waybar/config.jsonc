@@ -20,6 +20,11 @@
 	    "format": "{short}",
 	    "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
 	},
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip": true,
+        "tooltip-format": "{:L%A %d %B %Y}"
+    },
 	"pulseaudio": {
 		"on-click": "pavucontrol",
 		"scroll-step": 5,
@@ -48,8 +53,8 @@
             "menu-actions": {
                 "shutdown": "shutdown",
                 "reboot": "reboot",
-                "suspend": "systemctl suspend",
-                "hibernate": "systemctl hibernate"
+                "lock": "swaylock -f -c 000000",
+                "suspend": "systemctl suspend"
             }
     }
 }
