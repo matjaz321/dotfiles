@@ -1,0 +1,16 @@
+# Catppuccin Macchiato palette
+_MAUVE="\[$(tput setaf 183)\]"    # #c6a0f6
+_GREEN="\[$(tput setaf 115)\]"    # #a6da95
+_BLUE="\[$(tput setaf 111)\]"     # #8aadf4
+_YELLOW="\[$(tput setaf 221)\]"   # #eed49f
+_RESET="\[$(tput sgr0)\]"
+
+# Git branch helper
+_git_branch() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null) || \
+  branch=$(git rev-parse --short HEAD 2>/dev/null) || return
+  echo " ${branch}"
+}
+
+PS1="${_BLUE}\u${_RESET}@${_GREEN}\H${_RESET}:${_MAUVE}\w${_YELLOW}\$(_git_branch)${_RESET}$ "
